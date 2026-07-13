@@ -1,0 +1,380 @@
+{% load jalali %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+
+<title>Print Tazkera</title>
+
+<style>
+
+/* ================= A4 SETUP ================= */
+
+@page {
+    size: A4;
+    margin: 10mm;
+}
+
+
+@font-face {
+  font-family: 'BNZN';
+  src: url("{% static 'fonts/BahijNazanin-Bold.woff' %}");
+}
+@font-face {
+  font-family: 'NZN';
+  src: url("{% static 'fonts/BNazanin.woff' %}");
+}
+@font-face {
+  font-family: 'VZR';
+  src: url("{% static 'fonts/Vazir.woff' %}");
+}
+@font-face {
+  font-family: 'RZVN';
+  src: url("{% static 'fonts/Rezvan.woff' %}");
+}
+
+
+body {
+    font-family: BNZN;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* ================= OUTER BORDER ================= */
+
+.form {
+    border: 2px solid black;
+    padding: 10px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* ================= TABLE ================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+    padding: 5px;
+    vertical-align: middle;
+    width: 1%;
+    white-space: nowrap;
+}
+
+.rwo_desired {
+    border: 1px solid black;
+    padding: 5px;
+    vertical-align: middle;
+    width: 75%;
+    white-space: nowrap;
+}
+
+/* ================= PHOTO ================= */
+
+.photo {
+    width: 120px;
+    height: 140px;
+    object-fit: cover;
+}
+
+/* ================= SECTION TITLE ================= */
+
+.section {
+    background: #eee;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ================= PRINT BUTTON ================= */
+
+.print-btn {
+    margin: 10px;
+    text-align: center;
+}
+
+@media print {
+    .print-btn {
+        display: none;
+    }
+}
+
+.vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(360deg);   /* Bottom → Top */
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="print-btn">
+    <button onclick="window.print()">Print / چاپ</button>
+</div>
+
+
+<!-- HEADER -->
+<table class="header" >
+<tr>
+    <td style="border:none;">
+    دافغانستان اسلامي امارت سفارت<br>تهران
+    </td>
+
+    <td style="border:none;">
+        <img src="{% static 'images/logo.png' %}" alt="logo" style="width:90px;height:90px;">
+    <br>د پـﯧـ‎ژندپاڼې د غیر حضوري خدمتونو فورم / فورم خدمات غیرحضوری تذکره
+    </td>
+
+    <td style="border:none;">
+    سفارت امارت اسلامی افغانستان<br>تهران
+    </td>
+</tr>
+</table>
+
+<div class="form">
+<!-- PERSONAL INFO -->
+<table>
+
+<tr>
+    <td colspan="5" style="text-align: center; font-size: 16px; height: 50px;">په غایب ډول د پـﯧـ‎ژندپاڼې د سموني د غوښتونکي پـﯧـ‎ژند گلوي / شهرت متقاضی اصلاح تذکره غیابی</td>
+</tr>
+
+<tr>
+    <td>نوم او تخلص / اسم و تخلص</td>
+    <td>{{ tazkera.full_name }}</td>
+
+    <td>ونه / قد</td>
+    <td style="font-family: NZN;">{{ tazkera.height }}</td>
+
+    <td rowspan="6" style="width:130px; text-align: center;">محل الصاق عکس</td>
+</tr>
+
+<tr>
+    <td>د پلار نوم / اسم پدر</td>
+    <td>{{ tazkera.father_name }}</td>
+
+    <td>دسترگو رنگ / رنگ چشم</td>
+    <td>{{ tazkera.eye_color }}</td>
+</tr>
+
+<tr>
+    <td>د نیکه نوم / اسم پدرکلان</td>
+    <td>{{ tazkera.grandfather_name }}</td>
+
+    <td>وروځي / ابرو</td>
+    <td>{{ tazkera.eyebrow }}</td>
+</tr>
+
+<tr>
+    <td>د زېږېدنې ځای / محل تولد</td>
+    <td>{{ tazkera.place_of_birth }}</td>
+
+    <td>د مخ رنگ / رنگ چهره</td>
+    <td>{{ tazkera.face_color }}</td>
+</tr>
+
+<tr>
+    <td>د زېږېدنې نيټه / تاریخ تولد</td>
+    <td style="font-family: NZN;">{{ tazkera.date_of_birth }}</td>
+
+    <td>د وېښتانو رنگ / رنگ مو</td>
+    <td>{{ tazkera.hair_color }}</td>
+</tr>
+
+<tr>
+    <td>مدني حالت / حالت مدنی</td>
+    <td>{{ tazkera.marital_status }}</td>
+
+     <td>نورې نښې / نشانه های دیگر</td>
+    <td>{{ tazkera.special_marks }}</td>
+</tr>
+
+<tr>
+    <td>مورنۍ ژبه / زبان مادری</td>
+    <td>{{ tazkera.mother_language }}</td>
+
+    <td class="vertical" rowspan="4" style="width:90px;">د ایران اقامتي سند<br>مدرک اقامتی ایران</td>
+
+    <td>پاسپورت اقامتی</td>
+     <td style="font-family: NZN;">
+        {% if tazkera.id_type == "passport" %}
+            {{ tazkera.id_number }}
+        {% endif %}
+    </td>
+</tr>
+
+<tr>
+    <td>اصلي استوګنځی / سکونت اصلی</td>
+    <td>{{ tazkera.permanent_address }}</td>
+
+    <td>برگه سرشماری</td>
+     <td style="font-family: NZN;">
+        {% if tazkera.id_type == "sarshomari" %}
+            {{ tazkera.id_number }}
+        {% endif %}
+    </td>
+</tr>
+
+<tr>
+    <td>اوسنی استوګنځی / سکونت فعلی</td>
+    <td>{{ tazkera.current_address }}</td>
+
+    <td>کارت آمایش</td>
+    <td style="font-family: NZN;">
+        {% if tazkera.id_type == "amayesh" %}
+            {{ tazkera.id_number }}
+        {% endif %}
+    </td>
+</tr>
+
+<tr>
+    <td>د اړیکې شمېره / شماره تماس</td>
+    <td style="font-family: NZN;">{{ tazkera.phone }}</td>
+
+    <td>دفترچه ویژه اقامت</td>
+    <td style="font-family: NZN;">
+        {% if tazkera.id_type == "daftarche" %}
+            {{ tazkera.id_number }}
+        {% endif %}
+    </td>
+</tr>
+
+
+
+
+<tr> 
+    <td rowspan="2">
+        د خدمت ډولونه / نوع خدمات
+    </td>
+
+    <td>
+        {% if duplicate %}■{% else %}☐{% endif %}
+        تذکره المثنی
+    </td>
+    
+    <td>
+        {% if certification %}■{% else %}☐{% endif %}
+        تایید تذکره
+    </td>
+    
+    <td>
+        {% if photo_reattach %}■{% else %}☐{% endif %}
+        تجدید یا نصب عکس
+    </td>
+    
+    <td>
+        {% if name_edition %}■{% else %}☐{% endif %}
+        اصلاح اسم یا سن
+    </td>
+</tr>
+
+<tr>
+    <td>
+        {% if date_place_birth %}■{% else %}☐{% endif %}
+        اصلاح محل تولد و تاریخ
+    </td>
+    
+    <td>
+        {% if birth_certification %}■{% else %}☐{% endif %}
+        اخذ تولد کارت
+    </td>
+    
+    <td>
+        {% if birth_place_edition %}■{% else %}☐{% endif %}
+        اصلاح محل تولد در کارت
+    </td>
+</tr>
+
+</table>
+
+
+
+<br>
+
+
+<!-- RELATIVES -->
+<table>
+
+<tr>
+    <td colspan="5" style="text-align: center; font-size: 16px; height: 50px;">د پـﯧـ‎ژندپاڼې غوښتونکي د استازي پـﯧـ‎ژند گلوي / شهرت نماینده متقاضی تذکره غیابی</td>
+</tr>
+
+<tr>
+    <td>نوم او تخلص / اسم و تخلص</td>
+    <td class="rwo_desired">{{ tazkera.full_name_r }}</td>
+</tr>
+
+<tr>
+    <td>د پلار نوم / اسم پدر</td>
+    <td class="rwo_desired">{{ tazkera.father_name_r }}</td>
+</tr>
+
+<tr>
+    <td>د نیکه نوم / اسم پدر کلان</td>
+    <td class="rwo_desired">{{ tazkera.grandfather_name_r }}</td>
+</tr>
+
+<tr>
+    <td>د پـﯧـ‎ژندپاڼې شمېره / شماره تذکره</td>
+    <td class="rwo_desired" style="font-family: NZN;">{{ tazkera.tazkera_id }}</td>
+</tr>
+
+<tr>
+    <td>د اړیکې شمېره / شماره تماس</td>
+    <td class="rwo_desired" style="font-family: NZN;">{{ tazkera.phone_r }}</td>
+</tr>
+
+<tr>
+    <td>د رسمي نکاح خط گڼـ‎ه / شماره نکاح خط رسمی</td>
+    <td class="rwo_desired" style="font-family: NZN;">{{ tazkera.marriage_id }}</td>
+</tr>
+
+<tr>
+    <td>د خپلوي ډول / نوع قرابت</td>
+    <td class="rwo_desired">{{ tazkera.kindship }}</td>
+</tr>
+
+</table>
+
+<div style="margin-top:10px; text-align:right;">
+پورتني لیکل شوي معلومات صحت لري، هر ډول مسؤلیت یې‎ پر غاړ‎ه لرم. / درج معلومات فوق صحت است و مسئولیت بعدی آن را میپذیرم.
+</div>
+
+<!-- ISSUE DATE -->
+<div style="margin-top:10px; text-align:left; font-family: NZN;">
+    نیته / تاریخ:
+    {{ tazkera.issue_date | shamsi}}
+</div>
+
+<br>
+
+<div style="text-align:left;">
+    د غوښتونکي لاسلیک / امضاء متقاضی
+</div>
+
+</div>
+
+<script>
+
+window.print();
+
+</script>
+
+</body>
+</html>

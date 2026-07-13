@@ -1,0 +1,24 @@
+<h2>All Records</h2>
+
+<table border="1" width="100%">
+    <tr>
+        <th>Name</th>
+        <th>Father</th>
+        <th>Phone</th>
+        <th>Print</th>
+    </tr>
+
+    {% for i in data %}
+    <tr>
+        <td>{{ i.full_name }}</td>
+        <td>{{ i.father_name }}</td>
+        <td>{{ i.phone }}</td>
+        <td>
+            <a href="{% url 'print_tazkera' i.id %}">
+                Print
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
